@@ -1,7 +1,7 @@
 #from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Menu, Booking
 from .serializers import menuSerializer, bookingSerializer
