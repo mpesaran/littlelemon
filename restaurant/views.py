@@ -2,8 +2,8 @@
 from rest_framework import generics
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
+
+from rest_framework.permissions import IsAuthenticated ,IsAdminUser, AllowAny
 from .models import Menu, Booking
 from .serializers import menuSerializer, bookingSerializer
 
@@ -14,6 +14,10 @@ def index(request):
 class MenuItemView(generics.ListCreateAPIView):
     queryset = Menu.objects.all()
     serializer_class = menuSerializer
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return [IsAdminUser()]
+        return [AllowAny()]
 
 class SingleMenuItemView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
     queryset = Menu.objects.all()
